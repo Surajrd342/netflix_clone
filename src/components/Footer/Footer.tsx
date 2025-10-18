@@ -1,5 +1,5 @@
 import { FB, Instagram, Twitter, Youtube } from "@/utils/icons";
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import React from "react";
 
 const Footer = () => {
