@@ -1,31 +1,30 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IconType } from "react-icons";
 
-
 export interface SliderButtonProps {
-    isRight : boolean;
+  isRight: boolean;
 }
 
 export interface ButtonProps {
-    filled? : boolean;
-    label?: string;
-    Icon: IconType;
-    rounded?: boolean;
-    onClick?:() => void;
-    hiddeen?: boolean;
+  filled?: boolean;
+  label?: string;
+  Icon: IconType;
+  rounded?: boolean;
+  onClick?: () => void;
+  hiddeen?: boolean;
 }
 
 export interface CardProps {
-    defaultCard?: boolean;
-    removeMovie?: (id: number) => void;
-    item: Media;
-    MediaType?: string;
-    enableGenres?: boolean;
+  defaultCard?: boolean;
+  removeMovie?: (id: number) => void;
+  item: Media;
+  MediaType?: string;
+  enableGenres?: boolean;
 }
 
-export interface MediaType{
-    MOVIE: string;
-    TV: "tv";
+export interface MediaType {
+  MOVIE: string;
+  TV: "tv";
 }
 
 export interface Genre {
@@ -53,20 +52,30 @@ export interface Media {
   genres?: Genre[];
 }
 
-export interface Video{
-    id: string;
-    ley: string;
-    type: string;
-    name: string;
-    site: string;
+export interface Video {
+  id: string;
+  ley: string;
+  type: string;
+  name: string;
+  site: string;
 }
 
-export interface MediaItem{
-    id: number;
-    type: "movie" | "tv";
-    title: string;
+export interface MediaItem {
+  id: number;
+  type: "movie" | "tv";
+  title: string;
 }
 
+export interface MovieSectionProps {
+  heading: string;
+  endpoint: string;
+  loading?: boolean;
+  setLoading?: (loading: boolean) => void;
+}
+
+export interface RenderGenreProps {
+  genreIds: number[];
+}
 
 export interface AxiosErrorType {
   code?: string;
@@ -97,22 +106,21 @@ export interface MovieResonse {
   results: Media[];
 }
 
-
-export interface RenderGenreProps{
-    genreIds: number[];
+export interface RenderGenreProps {
+  genreIds: number[];
 }
 
-export interface childrenProvider{
-    children: React.ReactNode;
+export interface childrenProvider {
+  children: React.ReactNode;
 }
 
-export interface ModelProps{
-    modelData: Media;
-    ModelOpen: boolean;
-    enableGenres: boolean;
-    handleClose: () => void;
+export interface ModelProps {
+  modelData: Media;
+  ModelOpen: boolean;
+  enableGenres: boolean;
+  handleClose: () => void;
 }
 
-export interface SimilarMediaProps{
-    id: number;
+export interface SimilarMediaProps {
+  id: number;
 }
