@@ -7,7 +7,7 @@ import {
 import {
   IoPlaySharp as Play,
   IoSearch as Search,
-  IoNotifications as notifications,
+  IoNotifications as Notifications,
   IoAddSharp as Add,
   IoChevronDown as Down,
   IoLogoLinkedin as Linkedin,
@@ -19,6 +19,9 @@ import {
   AiOutlineLike as Like,
   AiOutlineDislike as Dislike,
 } from "react-icons/ai";
+
+import { GoMute as Mute, GoUnmute as Unmute } from "react-icons/go";
+import { FaAngleRight as Next, FaAngleLeft as Previous } from "react-icons/fa6";
 
 import {
   MdNoAdultContent as Adult,
@@ -38,7 +41,7 @@ export {
   Tick,
   Play,
   Search,
-  notifications,
+  Notifications,
   Add,
   Down,
   Linkedin,
@@ -52,4 +55,8 @@ export {
   FB,
   Instagram,
   Youtube,
+  Next,
+  Previous,
+  Mute,
+  Unmute
 };

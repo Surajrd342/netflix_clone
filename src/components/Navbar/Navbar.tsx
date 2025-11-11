@@ -1,4 +1,5 @@
 "use client";
+
 import {
   AppBar,
   Avatar,
@@ -33,11 +34,11 @@ const pages = [
 
 const Navbar = () => {
   const router = useRouter();
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [showClearIcon, setShowClearIcon] = useState<string>("none");
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showClearIcon, setShowClearIcon] = useState("none");
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
@@ -45,10 +46,10 @@ const Navbar = () => {
     setAnchorElNav(null);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event) => {
     const value = event.target.value;
     setSearchQuery(value);
-    setShowClearIcon(value ? "block" : "none");
+    setShowClearIcon(value ? "flex" : "none");
   };
 
   const handleClick = () => {
@@ -56,9 +57,7 @@ const Navbar = () => {
     setShowClearIcon("none");
   };
 
-  const handleSearchKeyPress = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleSearchKeyPress = (event) => {
     if (event.key === "Enter" && searchQuery.trim()) {
       event.preventDefault();
       router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
@@ -70,7 +69,7 @@ const Navbar = () => {
       position="sticky"
       sx={{
         backgroundColor: "rgba(0,0,0,.65)",
-        top: "0",
+        top: 0,
         transition: "background-color 0.3s",
         "&:hover": {
           backgroundColor: "#000",
@@ -84,7 +83,7 @@ const Navbar = () => {
           <Image
             width={100}
             height={50}
-            src={"/assets/logo.png"}
+            src="/assets/logo.png"
             alt="Netflix Logo"
             priority
             style={{
@@ -93,14 +92,14 @@ const Navbar = () => {
             }}
           />
 
-          {/* Mobile View Navbar Items  */}
+          {/* Mobile Navbar */}
           <Box
             sx={{
               flexGrow: 1,
               display: { xs: "flex", md: "none" },
             }}
           >
-            {/* Bar icon for Mobile View */}
+            {/* Hamburger Icon */}
             <IconButton
               size="large"
               aria-label="menu"
@@ -111,6 +110,8 @@ const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
+
+            {/* Mobile Menu */}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -123,62 +124,47 @@ const Navbar = () => {
                 vertical: "top",
                 horizontal: "left",
               }}
-              open={Boolean(handleCloseNavMenu)}
+              open={Boolean(anchorElNav)} // ✅ fixed
+              onClose={handleCloseNavMenu}
               sx={{
-                display: {
-                  xs: "block",
-                  md: "none",
-                },
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    borderRadius: 0,
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      textAlign: "center",
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Link
+                    href={
+                      page === "Home"
+                        ? "/"
+                        : page === "My List"
+                        ? "/my_list"
+                        : "#"
+                    }
+                    style={{
+                      textDecoration: "none",
                       color: "black",
+                      width: "100%",
                     }}
                   >
-                    <Link
-                      href={
-                        page === "Home"
-                          ? "/"
-                          : page === "My List"
-                          ? "/my_list"
-                          : "#"
-                      }
-                      passHref
-                      style={{
-                        textDecoration: "none",
-                        color: "black",
+                    <Box
+                      sx={{
+                        opacity: 0.9,
+                        cursor: "pointer",
+                        padding: ".6rem .9rem",
+                        "&:hover": {
+                          borderColor: "#fff",
+                        },
                       }}
                     >
-                      <Box
-                        sx={{
-                          opacity: 0.9,
-                          cursor: "pointer",
-                          padding: ".6rem .9rem",
-                          "&:hover": {
-                            borderColor: "#fff",
-                          },
-                        }}
-                      >
-                        {page}
-                      </Box>
-                    </Link>
-                  </Typography>
+                      <Typography component="div">{page}</Typography>
+                    </Box>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-          {/* Desktop View Navbar Items  */}
+          {/* Desktop Navbar */}
           <Box
             sx={{
               flexGrow: 1,
@@ -191,10 +177,9 @@ const Navbar = () => {
                 href={
                   page === "Home" ? "/" : page === "My List" ? "/my_list" : "#"
                 }
-                passHref
                 style={{
                   textDecoration: "none",
-                  color: "White",
+                  color: "white",
                 }}
               >
                 <Box
@@ -208,15 +193,18 @@ const Navbar = () => {
                     },
                   }}
                 >
-                  {page}
+                  <Typography component="div">{page}</Typography>
                 </Box>
               </Link>
             ))}
           </Box>
+
+          {/* Search Bar */}
           <FormControl
             sx={{
               marginRight: "10px",
               backgroundColor: "#2a2a2a99",
+              borderRadius: 1,
             }}
           >
             <TextField
@@ -226,46 +214,38 @@ const Navbar = () => {
               value={searchQuery}
               onChange={handleChange}
               onKeyPress={handleSearchKeyPress}
-              inputProps={{
-                startAdorment: (
+              InputProps={{
+                startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon
-                      sx={{
-                        color: "#ffffff80",
-                      }}
-                    />
+                    <SearchIcon sx={{ color: "#ffffff80" }} />
                   </InputAdornment>
                 ),
-                endAdorment: (
+                endAdornment: (
                   <InputAdornment
                     position="end"
-                    style={{
+                    sx={{
                       display: showClearIcon,
+                      cursor: "pointer",
                     }}
                     onClick={handleClick}
                   >
-                    <ClearIcon
-                      sx={{
-                        color: "#ffffff80",
-                        cursor: "pointer",
-                      }}
-                    />
+                    <ClearIcon sx={{ color: "#ffffff80" }} />
                   </InputAdornment>
                 ),
-                style: { color: "#ffffff80" },
               }}
               sx={{
-                "& .MuiInpurBase-input": {
+                "& .MuiInputBase-input": {
                   color: "#FFFFFF",
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
                 },
               }}
             />
           </FormControl>
-          <Box
-            sx={{
-              flexGrow: 0,
-            }}
-          >
+
+          {/* Avatar / Profile */}
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Settings">
               <IconButton>
                 <Avatar

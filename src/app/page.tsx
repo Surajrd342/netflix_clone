@@ -1,11 +1,63 @@
+"use client";
+import Banner from "@/components/Banner/Banner";
+import MovieSections from "@/components/MovieSections/MovieSections";
 import { MovieSectionProps } from "@/types";
-import React from "react";
+import { Box, CircularProgress } from "@mui/material";
+import React, { useState } from "react";
 
-const page = () => {
+const Home = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <>
+      {loading && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 1,
+          }}
+        >
+          <CircularProgress
+            size={60}
+            sx={{
+              color: "red",
+            }}
+          />
+        </Box>
+      )}
+      <Banner />
+      <Box
+        sx={{
+          marginTop: "9rem",
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "#141414",
+          color: "white",
+          position: "relative",
+          minHeight: "100vh",
+        }}
+      >
+        <Box
+          sx={{
+            marginLeft: ".8rem",
+            zIndex: 0,
+          }}
+        >
+          {section.map((item, index) => (
+            <MovieSections
+              key={index}
+              heading={item.heading}
+              endpoint={item.endpoint}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          ))}
+        </Box>
+      </Box>
+    </>
   );
 };
 
@@ -52,4 +104,4 @@ const section: MovieSectionProps[] = [
   },
 ];
 
-export default page;
+export default Home;
