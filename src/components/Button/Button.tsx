@@ -2,7 +2,7 @@ import { ButtonProps } from "@/types";
 import { Box } from "@mui/material";
 import React from "react";
 
-const Button: React.FC<ButtonProps> = ({ props }) => {
+const Button: React.FC<ButtonProps> = (props) => {
   const { filled, label, Icon, onClick, hidden, rounded } = props;
   const backgroundColor = filled ? "white" : "#6d6d6db3";
   const fontColor = filled ? "black" : "white";
@@ -37,18 +37,38 @@ const Button: React.FC<ButtonProps> = ({ props }) => {
         },
         "@media(max-width: 600px)": {
           backgroundColor: filled ? "tomato" : backgroundColor,
-          padding: rounded ? ".3rem" : ".5rem 1.2 rem",
+          padding: rounded ? ".3rem" : ".5rem 1.2rem",
         },
       }}
     >
-      <Box
-      component={Icon}
-      sx={{
-        fontSize: rounded ? "1rem" : "1.1rem:",
-        marginTop: !rounded ? ".8rem" : "0",
-      }}
-      >
-        <Box>{label}</Box>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        {Icon && (
+          <Box
+            component="span"
+            sx={{ display: "inline-flex", alignItems: "center" }}
+          >
+            <Icon
+              style={{
+                fontSize: rounded ? "1rem" : "1.1rem",
+                marginTop: !rounded ? ".8rem" : "0",
+              }}
+            />
+          </Box>
+        )}
+
+        {!rounded && (
+          <Box
+            component="span"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "1rem",
+              marginLeft: ".8rem",
+              "@media(max-width: 600px)": { marginLeft: ".6rem" },
+            }}
+          >
+            {label}
+          </Box>
+        )}
       </Box>
     </Box>
   );

@@ -11,7 +11,7 @@ export interface ButtonProps {
   Icon: IconType;
   rounded?: boolean;
   onClick?: () => void;
-  hiddeen?: boolean;
+  hidden?: boolean;
 }
 
 export interface CardProps {
